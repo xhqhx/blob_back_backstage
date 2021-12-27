@@ -28,6 +28,8 @@ media
 *.py[cod]
 *$py.class
 
+VENVd
+
 # Distribution / packaging
 .Python build/
 develop-eggs/
