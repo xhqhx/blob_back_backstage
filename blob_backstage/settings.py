@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/3.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
-
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-xt)%yycvd=a0g)3w6(5u--sexn%f9bjbae$_)cm384e5@jxyn5
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*',]
 
 
 # Application definition
@@ -37,16 +37,21 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # 'corsheaders',
+    'user',
+    'news',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
+    # 'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'blob_backstage.cors_middelware.CORSMiddleware'
 ]
 
 ROOT_URLCONF = 'blob_backstage.urls'
@@ -54,7 +59,8 @@ ROOT_URLCONF = 'blob_backstage.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')]
+        ,
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -66,7 +72,6 @@ TEMPLATES = [
         },
     },
 ]
-
 WSGI_APPLICATION = 'blob_backstage.wsgi.application'
 
 
@@ -75,8 +80,13 @@ WSGI_APPLICATION = 'blob_backstage.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        # ENGINE - 指定数据库存储引擎/sqlite3/oracle/postgresql
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'db_blog',  # NAME - 指定要连接的数据库名称
+        'USER': 'root',  # USER - 指定登录到数据库的用户名
+        'PASSWORD': 'xhq19990419',  # PASSWORD - 数据库的密码
+        'HOST': '127.0.0.1',  # HOST/POST - 连接具体数据库的 IP 和 端口
+        'POST': '3306'
     }
 }
 
@@ -123,5 +133,3 @@ STATIC_URL = '/static/'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-# 1111
